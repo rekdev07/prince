@@ -1,6 +1,4 @@
 from ollama import AsyncClient, ChatResponse
-# from typing import AsyncIterator
-from dotenv import dotenv_values
 
 class Model:
     def __init__(
@@ -33,8 +31,3 @@ class Model:
         )
 
         return response.message.content
-        """
-        async for part in stream:
-            if part["message"]["content"] != "":
-                yield part["message"]["content"]
-        """

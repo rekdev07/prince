@@ -29,9 +29,3 @@ class Settings:
         self.api_key: str | None = api_key if api_key else None
         self.think: str | bool = think if think else "low"
         self.host: str = host if host else "https://ollama.com"
-
-settings = Settings()
-print(settings.model)
-print(settings.api_key)
-print(settings.think)
-print(settings.host)
