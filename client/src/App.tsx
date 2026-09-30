@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import './App.css'
 import Controls from './components/Controls'
 
@@ -6,6 +8,45 @@ import TextArea from './components/TextArea'
 import ShowArea from './components/ShowArea'
 
 function App() {
+	const [loading, setLoading] = useState<boolean>(false)
+	const [showAreaValue, setShowAreaValue] = useState<string | undefined>('')
+
+	type Result = {
+		text?: string
+	}
+
+	const onTypeFinishedHandler = async (v: string | undefined) => {
+		if (!loading) {
+			try {
+				setLoading(true)
+
+				const response = await fetch('http://127.0.0.1:8000', {
+					method: 'POST',
+					body: JSON.stringify({
+						enhance: false,
+						tone: 'default',
+						text: v,
+					}),
+				})
+
+				if (!response.ok) {
+					setShowAreaValue('There was an error')
+					setLoading(false)
+				}
+
+				const result: Result = await response.json()
+				const text = result.text
+
+				if (text) setShowAreaValue(text)
+
+				setLoading(false)
+			} catch (e) {
+				setLoading(false)
+				setShowAreaValue(`An unexpected error has ocurred: ${e}`)
+			}
+		}
+	}
+
 	return (
 		<>
 			<Header />
@@ -13,9 +54,9 @@ function App() {
 				<div className='grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-[1fr_1fr_192px]'>
 					<TextArea
 						placeholder='Write or paste your text here'
-						onTypeFinished={(v) => console.log(v)}
+						onTypeFinished={onTypeFinishedHandler}
 					/>
-					<ShowArea text='Hello **world**!' loading />
+					<ShowArea text={showAreaValue} loading={loading} />
 					<Controls />
 				</div>
 			</main>
