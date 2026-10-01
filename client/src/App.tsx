@@ -16,14 +16,16 @@ function App() {
 	}
 
 	const onTypeFinishedHandler = async (v: string | undefined) => {
-		if (!loading) {
+		if (!v?.trim()) setShowAreaValue('')
+
+		if (!loading && v?.trim()) {
 			try {
 				setLoading(true)
 
 				const response = await fetch(`${import.meta.env.VITE_API_URL}/fix`, {
 					method: 'POST',
 					headers: {
-						"Content-Type": "application/json"
+						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
 						enhance: false,
@@ -58,6 +60,7 @@ function App() {
 					<TextArea
 						placeholder='Write or paste your text here'
 						onTypeFinished={onTypeFinishedHandler}
+						onTypeFinishedTimeout={1000}
 					/>
 					<ShowArea text={showAreaValue} loading={loading} />
 					<Controls />
