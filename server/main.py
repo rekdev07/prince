@@ -1,11 +1,22 @@
 from pathlib import Path
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Literal
 from settings import Settings
 from model import Model
 
 app = FastAPI()
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 settings = Settings()
 
 BASE_SYSTEM_PROMPT = Path("SYSTEM_PROMPT.md").read_text(encoding="utf-8")
@@ -35,4 +46,4 @@ async def root(request: Request, llm_model: Model = Depends(get_model)):
 
     model_response = await llm_model.send_text(text=request.text, instructions=instructions)
 
-    return {"model_response": model_response}
+    return {"text": model_response}
