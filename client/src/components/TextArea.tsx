@@ -27,7 +27,7 @@ function TextArea({
 	return (
 		<textarea
 			ref={textAreaRef}
-			className='h-56 w-auto resize-none rounded-2xl border border-gray-300 bg-gray-50 p-5 outline-none placeholder:text-gray-600 md:h-72'
+			className='h-56 w-auto resize-none rounded-2xl border border-zinc-300 p-5 outline-none placeholder:text-gray-600 md:h-72 dark:border-zinc-600 dark:placeholder:text-zinc-300 dark:text-zinc-50'
 			placeholder={placeholder}
 			onKeyUp={onKeyUp}
 		></textarea>
