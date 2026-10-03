@@ -23,7 +23,7 @@ function PulseLine({ className }: PulseLineProps) {
 
 function ShowArea({ text, loading }: ShowAreaProps) {
 	return (
-		<div className='h-56 w-auto resize-none rounded-2xl border border-zinc-300 bg-zinc-100 p-5 font-serif font-medium text-zinc-900 outline-none md:h-72 dark:border-zinc-500 dark:bg-zinc-800 dark:text-zinc-50'>
+		<div className='h-56 w-auto resize-none overflow-y-auto rounded-2xl border border-zinc-300 bg-zinc-100 p-5 font-serif font-normal text-zinc-900 outline-none md:h-80 dark:border-zinc-500 dark:bg-zinc-800 dark:text-zinc-50'>
 			{loading ? (
 				<div className='flex animate-pulse flex-col gap-4'>
 					<PulseLine />

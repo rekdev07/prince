@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 @import "@fontsource/montserrat-alternates/600.css";
-@import "@fontsource/noto-serif/index.css";
-@import "@fontsource/noto-sans/index.css";
+
+/*Noto Sans*/
+@import "@fontsource/noto-sans/400.css";
+@import "@fontsource/noto-sans/600.css";
+
+
+/*Noto Serif*/
+@import "@fontsource/noto-serif/400.css";
 
 @theme {
     --font-montserrat-alternates: "Montserrat Alternates", sans-serif;
