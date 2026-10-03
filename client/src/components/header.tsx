@@ -39,7 +39,7 @@ function HeaderButton({
 
 function Header({ children }: PropsWithChildren) {
 	return (
-		<header className='fixed top-0 left-0 flex h-20 w-full items-center justify-center px-4'>
+		<header className='fixed top-0 left-0 flex h-20 w-full items-center justify-center px-4 bg-zinc-50 dark:bg-zinc-900'>
 			<div className='flex w-full max-w-6xl items-center justify-between md:px-6'>
 				<h1 className='font-montserrat-alternates text-2xl font-semibold text-zinc-900 dark:text-zinc-50'>
 					Prince
