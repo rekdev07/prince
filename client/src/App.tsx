@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
+import { FolderGit2, Sun } from 'lucide-react'
+
 import './App.css'
 import Controls from './components/Controls'
 
-import Header from './components/header'
+import { Header, HeaderButton } from './components/header'
 import TextArea from './components/TextArea'
 import ShowArea from './components/ShowArea'
 
@@ -54,7 +56,18 @@ function App() {
 
 	return (
 		<>
-			<Header />
+			<Header>
+				<HeaderButton
+					type='link'
+					href='https://github.com/rekdev07/prince'
+					target='_blank'
+				>
+					<FolderGit2 />
+				</HeaderButton>
+				<HeaderButton>
+					<Sun />
+				</HeaderButton>
+			</Header>
 			<main className='flex w-full justify-center px-4'>
 				<div className='grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-[1fr_1fr_192px]'>
 					<TextArea
