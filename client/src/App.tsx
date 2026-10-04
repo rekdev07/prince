@@ -1,62 +1,24 @@
-import { useState } from 'react'
+import './App.css'
 
 import { FolderGit2, Sun } from 'lucide-react'
 
-import './App.css'
-import Controls from './components/Controls'
+import useEnhancedText from './hooks/useEnhancedText'
 
+import Controls from './components/Controls'
 import { Header, HeaderButton } from './components/header'
 import TextArea from './components/TextArea'
 import ShowArea from './components/ShowArea'
 
 function App() {
-	const [loading, setLoading] = useState<boolean>(false)
-	const [showAreaValue, setShowAreaValue] = useState<string | undefined>('')
+	const { enhanceText, loading, result } = useEnhancedText()
 
-	type Result = {
-		text?: string
-	}
-
-	const onTypeFinishedHandler = async (v: string | undefined) => {
-		if (!v?.trim()) setShowAreaValue('')
-
-		if (!loading && v?.trim()) {
-			try {
-				setLoading(true)
-
-				const response = await fetch(`${import.meta.env.VITE_API_URL}/fix`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						enhance: false,
-						tone: 'default',
-						text: v,
-					}),
-				})
-
-				if (!response.ok) {
-					setShowAreaValue('There was an error')
-					setLoading(false)
-				}
-
-				const result: Result = await response.json()
-				const text = result.text
-
-				if (text) setShowAreaValue(text)
-
-				setLoading(false)
-			} catch (e) {
-				setLoading(false)
-				setShowAreaValue(`An unexpected error has ocurred: ${e}`)
-			}
-		}
+	const onTypeFinishedHander = (v: string | undefined) => {
+		if (!loading) enhanceText(v)
 	}
 
 	return (
 		<>
-			<Header pageYOffset={pageYOffset}>
+			<Header>
 				<HeaderButton
 					type='link'
 					href='https://github.com/rekdev07/prince'
@@ -72,10 +34,13 @@ function App() {
 				<div className='grid h-fit w-full max-w-6xl grid-cols-1 items-end gap-6 md:grid-cols-[1fr_1fr_192px]'>
 					<TextArea
 						placeholder='Write or paste your text here'
-						onTypeFinished={onTypeFinishedHandler}
+						onTypeFinished={onTypeFinishedHander}
 						onTypeFinishedTimeout={1000}
 					/>
-					<ShowArea text={showAreaValue} loading={loading} />
+					<ShowArea
+						text={result?.ok ? result?.enhancedText : result?.error}
+						loading={loading}
+					/>
 					<Controls />
 				</div>
 			</main>

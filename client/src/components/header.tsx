@@ -40,9 +40,7 @@ function HeaderButton({
 	}
 }
 
-type HeaderProps = PropsWithChildren<{
-	pageYOffset: number
-}>
+type HeaderProps = PropsWithChildren
 
 function Header({ children }: HeaderProps) {
 	const [isScrolled, setIsScrolled] = useState<boolean>(false)
