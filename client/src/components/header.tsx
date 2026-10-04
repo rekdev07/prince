@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
 import { type PropsWithChildren } from 'react'
 
 import { twMerge } from 'tailwind-merge'
+
+import useIsScrolled from '../hooks/useIsScrolled'
 
 type HeaderButtonProps = PropsWithChildren<{
 	type?: 'button' | 'link'
@@ -43,19 +44,7 @@ function HeaderButton({
 type HeaderProps = PropsWithChildren
 
 function Header({ children }: HeaderProps) {
-	const [isScrolled, setIsScrolled] = useState<boolean>(false)
-
-	const scrollHandler = () => {
-		const actualPageYOffset = window.pageYOffset
-
-		setIsScrolled(actualPageYOffset > 0)
-	}
-
-	useEffect(() => {
-		window.addEventListener('scroll', scrollHandler)
-
-		return () => window.removeEventListener('scroll', scrollHandler)
-	}, [])
+	const { isScrolled } = useIsScrolled()
 
 	return (
 		<header
