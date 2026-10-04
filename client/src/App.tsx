@@ -56,7 +56,7 @@ function App() {
 
 	return (
 		<>
-			<Header>
+			<Header pageYOffset={pageYOffset}>
 				<HeaderButton
 					type='link'
 					href='https://github.com/rekdev07/prince'

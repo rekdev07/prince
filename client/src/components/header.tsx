@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react'
 import { type PropsWithChildren } from 'react'
+
+import { twMerge } from 'tailwind-merge'
 
 type HeaderButtonProps = PropsWithChildren<{
 	type?: 'button' | 'link'
@@ -37,9 +40,34 @@ function HeaderButton({
 	}
 }
 
-function Header({ children }: PropsWithChildren) {
+type HeaderProps = PropsWithChildren<{
+	pageYOffset: number
+}>
+
+function Header({ children }: HeaderProps) {
+	const [isScrolled, setIsScrolled] = useState<boolean>(false)
+
+	const scrollHandler = () => {
+		const actualPageYOffset = window.pageYOffset
+
+		setIsScrolled(actualPageYOffset > 0)
+	}
+
+	useEffect(() => {
+		window.addEventListener('scroll', scrollHandler)
+
+		return () => window.removeEventListener('scroll', scrollHandler)
+	}, [])
+
 	return (
-		<header className='fixed top-0 left-0 flex h-20 w-full items-center justify-center px-4 bg-zinc-50 dark:bg-zinc-900'>
+		<header
+			className={twMerge(
+				'fixed top-0 left-0 flex h-20 w-full items-center justify-center bg-zinc-50 px-4 outline-zinc-300/0 transition-all dark:bg-zinc-900 dark:outline-zinc-600/0',
+				isScrolled
+					? 'shadow-sm outline-1 outline-zinc-300 backdrop-blur-lg dark:bg-zinc-900/80 dark:outline-zinc-600'
+					: '',
+			)}
+		>
 			<div className='flex w-full max-w-6xl items-center justify-between md:px-6'>
 				<h1 className='font-montserrat-alternates text-2xl font-semibold text-zinc-900 dark:text-zinc-50'>
 					Prince
